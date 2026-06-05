@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Gear outer ring (Amir Kabir emblem style) -->
+  <circle cx="60" cy="60" r="56" fill="#1a3a6e" stroke="#c9a227" stroke-width="2"/>
+  <circle cx="60" cy="60" r="48" fill="#1e4080" stroke="#c9a227" stroke-width="1.5"/>
+  <!-- Gear teeth -->
+  <g fill="#c9a227">
+    <rect x="57" y="4" width="6" height="10" rx="1"/>
+    <rect x="57" y="106" width="6" height="10" rx="1"/>
+    <rect x="4" y="57" width="10" height="6" rx="1"/>
+    <rect x="106" y="57" width="10" height="6" rx="1"/>
+    <rect x="18" y="18" width="8" height="6" rx="1" transform="rotate(-45 22 21)"/>
+    <rect x="94" y="18" width="8" height="6" rx="1" transform="rotate(45 98 21)"/>
+    <rect x="18" y="96" width="8" height="6" rx="1" transform="rotate(45 22 99)"/>
+    <rect x="94" y="96" width="8" height="6" rx="1" transform="rotate(-45 98 99)"/>
+  </g>
+  <!-- Inner emblem flower -->
+  <circle cx="60" cy="60" r="28" fill="#fff" opacity="0.95"/>
+  <circle cx="60" cy="60" r="22" fill="#1a3a6e"/>
+  <g fill="#c9a227">
+    <ellipse cx="60" cy="48" rx="5" ry="10"/>
+    <ellipse cx="60" cy="72" rx="5" ry="10"/>
+    <ellipse cx="48" cy="60" rx="10" ry="5"/>
+    <ellipse cx="72" cy="60" rx="10" ry="5"/>
+    <ellipse cx="51.5" cy="51.5" rx="5" ry="10" transform="rotate(-45 51.5 51.5)"/>
+    <ellipse cx="68.5" cy="68.5" rx="5" ry="10" transform="rotate(-45 68.5 68.5)"/>
+    <ellipse cx="68.5" cy="51.5" rx="5" ry="10" transform="rotate(45 68.5 51.5)"/>
+    <ellipse cx="51.5" cy="68.5" rx="5" ry="10" transform="rotate(45 51.5 68.5)"/>
+  </g>
+  <circle cx="60" cy="60" r="6" fill="#c9a227"/>
+  <!-- AUT text arc hint -->
+  <text x="60" y="98" text-anchor="middle" fill="#c9a227" font-size="7" font-family="serif" font-weight="bold">AUT</text>
+</svg>

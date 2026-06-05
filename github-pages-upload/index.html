@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metaheuristic Optimization | Genetic Algorithm Simulator</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="theme-light lang-ar">
+  <div class="app">
+    <!-- Academic Banner -->
+    <div class="academic-banner">
+      <div class="banner-university">
+        <img src="assets/aut-logo.png" alt="Amir Kabir University" class="university-logo" onerror="this.onerror=null;this.src='assets/aut-logo.svg'">
+        <div class="university-info">
+          <span class="uni-name" data-i18n="universityName">جامعة أمير كبير طهران</span>
+          <span class="uni-name-en" data-i18n="universityNameEn">Amirkabir University of Technology</span>
+          <span class="course-title" data-i18n="courseTitle">Metaheuristic Optimization</span>
+        </div>
+      </div>
+      <div class="banner-meta">
+        <div class="meta-item">
+          <span class="meta-label" data-i18n="studentLabel">اسم الطالب</span>
+          <span class="meta-value">علي نصيف جاسم</span>
+        </div>
+        <div class="meta-divider"></div>
+        <div class="meta-item">
+          <span class="meta-label" data-i18n="professorLabel">دكتور المادة</span>
+          <span class="meta-value">د. محمد خالوئي</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-brand">
+        <div class="logo">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5" opacity="0.3"/>
+            <path d="M8 28 Q20 8 32 28" stroke="currentColor" stroke-width="2" fill="none"/>
+            <circle cx="14" cy="22" r="3" fill="var(--accent)"/>
+            <circle cx="26" cy="18" r="3" fill="var(--accent-secondary)"/>
+            <circle cx="20" cy="12" r="3" fill="var(--accent-tertiary)"/>
+          </svg>
+        </div>
+        <div>
+          <h1 data-i18n="appTitle">Metaheuristic Optimization — Genetic Algorithm</h1>
+          <p class="subtitle" data-i18n="appSubtitle">محاكاة تفاعلية للخوارزمية الجينية ضمن مقرر التحسين فوق-الوصفية</p>
+        </div>
+      </div>
+      <div class="header-controls">
+        <div class="lang-selector">
+          <label data-i18n="language">اللغة</label>
+          <select id="langSelect">
+            <option value="ar">العربية</option>
+            <option value="en">English</option>
+            <option value="fa">فارسی</option>          </select>
+        </div>
+        <button id="themeToggle" class="icon-btn" title="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main-layout" id="mainLayout">
+      <!-- Parameters Panel -->
+      <aside class="panel params-panel" id="panelParams">
+        <div id="paramsChangedBanner" class="params-changed-banner hidden" data-i18n="paramsChanged">تغيّرت الإعدادات — اضغط «تهيئة»</div>
+        <h2 data-i18n="parameters">المتغيرات</h2>
+        <div class="param-group">
+          <label data-i18n="populationSize">حجم المجتمع</label>
+          <input type="range" id="populationSize" min="10" max="100" value="40" step="5">
+          <span class="param-value" id="populationSizeVal">40</span>
+        </div>
+        <div class="param-group">
+          <label data-i18n="chromosomeLength">طول الكروموسوم (بت)</label>
+          <input type="range" id="chromosomeLength" min="8" max="32" value="16" step="4">
+          <span class="param-value" id="chromosomeLengthVal">16</span>
+        </div>
+        <div class="param-group">
+          <label data-i18n="mutationRate">معدل الطفرة</label>
+          <input type="range" id="mutationRate" min="0" max="20" value="5" step="1">
+          <span class="param-value" id="mutationRateVal">5%</span>
+        </div>
+        <div class="param-group">
+          <label data-i18n="crossoverRate">معدل التزاوج</label>
+          <input type="range" id="crossoverRate" min="50" max="100" value="80" step="5">
+          <span class="param-value" id="crossoverRateVal">80%</span>
+        </div>
+        <div class="param-group">
+          <label data-i18n="maxGenerations">الأجيال القصوى</label>
+          <input type="range" id="maxGenerations" min="10" max="200" value="50" step="10">
+          <span class="param-value" id="maxGenerationsVal">50</span>
+        </div>
+        <div class="param-group">
+          <label data-i18n="selectionMethod">طريقة الاختيار</label>
+          <select id="selectionMethod">
+            <option value="tournament" data-i18n="tournament">بطولة</option>
+            <option value="roulette" data-i18n="roulette">روليت</option>
+            <option value="rank" data-i18n="rank">ترتيب</option>
+          </select>
+        </div>
+        <div class="param-group">
+          <label data-i18n="targetFunction">الدالة المستهدفة</label>
+          <select id="targetFunction">
+            <option value="sphere">Sphere f(x)=-(x-0.5)²</option>
+            <option value="rastrigin">Rastrigin</option>
+            <option value="ackley">Ackley</option>
+          </select>
+        </div>
+
+        <p class="scroll-hint" data-i18n="scrollHint">↕ اسحب للأسفل لرؤية جميع الخيارات</p>
+        <div class="control-buttons">
+          <button id="btnInit" class="btn btn-secondary" data-i18n="initialize">تهيئة</button>
+          <button id="btnStep" class="btn btn-primary" data-i18n="nextStep">الخطوة التالية</button>
+          <button id="btnRunSlow" class="btn btn-accent" data-i18n="runSlow">تشغيل بطيء</button>
+          <button id="btnRunFast" class="btn btn-accent" data-i18n="runFast">تشغيل سريع</button>
+          <button id="btnPause" class="btn btn-secondary hidden" data-i18n="pause">إيقاف</button>
+          <button id="btnReset" class="btn btn-outline" data-i18n="reset">إعادة ضبط</button>
+        </div>
+      </aside>
+
+      <div class="col-resizer" id="resizerParams" title="اسحب لتغيير العرض">
+        <span class="resizer-arrows">◀▶</span>
+        <span class="resizer-grip"></span>
+      </div>
+
+      <!-- Visualization Area -->
+      <section class="viz-area" id="colViz">
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+          <div class="step-badge" data-step="init">
+            <span class="step-num">1</span>
+            <span class="step-name" data-i18n="stepInit">التهيئة</span>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step-badge" data-step="evaluate">
+            <span class="step-num">2</span>
+            <span class="step-name" data-i18n="stepEvaluate">التقييم</span>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step-badge" data-step="select">
+            <span class="step-num">3</span>
+            <span class="step-name" data-i18n="stepSelect">الاختيار</span>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step-badge" data-step="crossover">
+            <span class="step-num">4</span>
+            <span class="step-name" data-i18n="stepCrossover">التزاوج</span>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step-badge" data-step="mutate">
+            <span class="step-num">5</span>
+            <span class="step-name" data-i18n="stepMutate">الطفرة</span>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step-badge" data-step="replace">
+            <span class="step-num">6</span>
+            <span class="step-name" data-i18n="stepReplace">الاستبدال</span>
+          </div>
+        </div>
+
+        <!-- Main Canvas -->
+        <div class="canvas-container">
+          <canvas id="mainCanvas"></canvas>
+          <div class="canvas-overlay">
+            <div class="canvas-overlay-top">
+              <span class="canvas-phase-label" id="canvasPhaseLabel" data-i18n="stepInit">التهيئة</span>
+            <div class="gen-info">
+              <span data-i18n="generation">الجيل</span>: <strong id="genNumber">0</strong>
+              <span class="sep">|</span>
+              <span data-i18n="bestFitness">أفضل لياقة</span>: <strong id="bestFitness">—</strong>
+              <span class="sep">|</span>
+              <span data-i18n="avgFitness">متوسط اللياقة</span>: <strong id="avgFitness">—</strong>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secondary Charts -->
+        <div class="charts-row" id="chartsRow">
+          <div class="chart-box chart-col">
+            <h3 data-i18n="fitnessLandscape">منحنى اللياقة</h3>
+            <canvas id="landscapeCanvas"></canvas>
+          </div>
+          <div class="col-resizer chart-resizer" id="resizerChart1" title="اسحب لتغيير العرض">
+            <span class="resizer-arrows">◀▶</span>
+          </div>
+          <div class="chart-box chart-col">
+            <h3 data-i18n="populationDistribution">توزيع المجتمع</h3>
+            <canvas id="populationCanvas"></canvas>
+          </div>
+          <div class="col-resizer chart-resizer" id="resizerChart2" title="اسحب لتغيير العرض">
+            <span class="resizer-arrows">◀▶</span>
+          </div>
+          <div class="chart-box chart-col">
+            <h3 data-i18n="convergenceChart">مخطط التقارب</h3>
+            <canvas id="convergenceCanvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Chromosome Detail -->
+        <div class="chromosome-detail">
+          <h3 data-i18n="chromosomeView">عرض الكروموسومات</h3>
+          <p class="chromosome-meta" id="chromosomeMeta">—</p>
+          <div id="chromosomeGrid" class="chromosome-grid"></div>
+        </div>
+      </section>
+
+      <div class="col-resizer" id="resizerExplain" title="اسحب لتغيير العرض">
+        <span class="resizer-arrows">◀▶</span>
+        <span class="resizer-grip"></span>
+      </div>
+
+      <!-- Explanation Panel -->
+      <aside class="panel explain-panel" id="panelExplain">
+        <h2 data-i18n="stepExplanation">شرح الخطوة</h2>
+        <div class="current-step-label" id="currentStepLabel">—</div>
+        <div class="explanation-content" id="explanationContent">
+          <p data-i18n="welcomeText">اضغط "تهيئة" لبدء المحاكاة. ستشاهد كل خطوة من خطوات الخوارزمية الجينية مع شرح تفصيلي ورسم بياني.</p>
+        </div>
+
+        <div class="stats-box">
+          <h3 data-i18n="statistics">الإحصائيات</h3>
+          <div class="stat-row">
+            <span data-i18n="totalSteps">إجمالي الخطوات</span>
+            <strong id="statSteps">0</strong>
+          </div>
+          <div class="stat-row">
+            <span data-i18n="mutationsCount">عدد الطفرات</span>
+            <strong id="statMutations">0</strong>
+          </div>
+          <div class="stat-row">
+            <span data-i18n="crossoversCount">عدد التزاوجات</span>
+            <strong id="statCrossovers">0</strong>
+          </div>
+          <div class="stat-row">
+            <span data-i18n="bestChromosome">أفضل كروموسوم</span>
+            <code id="statBestChrom">—</code>
+          </div>
+          <div class="stat-row">
+            <span data-i18n="bestValue">أفضل قيمة</span>
+            <strong id="statBestValue">—</strong>
+          </div>
+        </div>
+
+        <p class="scroll-hint" data-i18n="scrollHint">↕ اسحب للأسفل</p>
+
+        <div id="shareLinkBox" class="share-link-box hidden">
+          <h3 data-i18n="shareLink">رابط المحاكي</h3>
+          <p class="report-desc" id="shareLinkHint" data-i18n="shareLinkDesc">شارك هذا الرابط</p>
+          <div class="share-link-row">
+            <input type="text" id="shareLinkInput" readonly class="share-link-input">
+            <button type="button" id="btnCopyLink" class="btn btn-primary" data-i18n="copyLink">نسخ</button>
+          </div>
+          <p class="publish-hint" data-i18n="publishHint">للنشر: شغّل deploy-vercel.ps1 في Terminal</p>
+        </div>
+
+        <div class="report-section">
+          <h3 data-i18n="exportReport">تصدير التقرير</h3>
+          <p class="report-desc" data-i18n="reportDesc">صدّر تقريراً أكاديمياً كاملاً يتضمن جميع الخطوات والرسوم والإحصائيات.</p>
+          <button id="btnExportHTML" class="btn btn-primary full-width" data-i18n="exportHTML">تصدير HTML</button>
+          <button id="btnExportJSON" class="btn btn-secondary full-width" data-i18n="exportJSON">تصدير JSON</button>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <img src="assets/aut-logo.png" alt="AUT" class="footer-logo" onerror="this.onerror=null;this.src='assets/aut-logo.svg'">
+        <p data-i18n="footer">Metaheuristic Optimization — علي نصيف جاسم — جامعة أمير كبير طهران</p>
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- Report language dialog -->
+  <div id="reportLangModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="reportLangBackdrop"></div>
+    <div class="modal-box">
+      <h3 data-i18n="reportLangTitle">اختر لغة التقرير</h3>
+      <p class="modal-desc" data-i18n="reportLangDesc">بأي لغة تريد تصدير التقرير؟</p>
+      <div class="report-lang-options">
+        <button type="button" class="btn btn-primary report-lang-btn" data-report-lang="ar">العربية</button>
+        <button type="button" class="btn btn-primary report-lang-btn" data-report-lang="en">English</button>
+        <button type="button" class="btn btn-primary report-lang-btn" data-report-lang="fa">فارسی</button>
+      </div>
+      <button type="button" class="btn btn-outline modal-cancel" id="reportLangCancel" data-i18n="cancel">إلغاء</button>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/genetic-algorithm.js"></script>
+  <script src="js/visualizer.js"></script>
+  <script src="js/report.js"></script>
+  <script src="js/panel-resize.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
